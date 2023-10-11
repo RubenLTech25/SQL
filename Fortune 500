@@ -96,3 +96,14 @@ when paid_time_off_days>=1 then "PTO"
 Else "no_time_off"
 End as"vacation_package"
 From fortune_companies;
+
+#Using another CASE statement, this query looks as length of maternity leave and whether an employee can expect to spend some quality time with their new families
+Select company_name,
+Case
+when maternity_leave_weeks>=12 then "family_time"
+when maternity_leave_weeks>=8 then "short_family_time"
+when maternity_leave_weeks>=4 then "very_short_family_time"
+when maternity_leave_weeks<4 then "back_to_work"
+Else "no_time_off"
+End as"family_leave_package"
+From fortune_companies;
