@@ -63,4 +63,36 @@ Select company_name, sum(round(revenue,2)) As total_revenue
 From fortune_companies
 Group by company_name;
 
-#
+#This query gives a snapshot of the company, total number of employees and their average tenure (how long do employees stay before they leave the company)
+Select company_name,employees, avg_employee_tenure
+From fortune_companies;
+
+#An example of Group by command, we are looking at revenue by industry
+Select industry, revenue
+From fortune_companies
+Group by industry;
+
+#taking a step closer, this query shows companies in the technology industry with revenue over 100.0 using both Where, And commands
+Select company_name
+From fortune_companies
+Where industry="Technology"
+And revenue>=100.0;
+
+#Using Where command, this query looks at Fortune 500 companies that offer healthcare benefits
+Select company_name, employees
+from fortune_companies
+Where healthcare_benefits=1;
+
+#A different approach of reviewing total revenue by industry with total revenue greater than or equal 100
+Select industry, sum(round(revenue,2)) As total_revenue
+From fortune_companies
+Group by industry
+Having total_revenue>=100;
+
+#Using a CASE statement, this query looks at companies that offer paid time off or vacation time as part of their benefits package
+Select company_name,
+Case
+when paid_time_off_days>=1 then "PTO"
+Else "no_time_off"
+End as"vacation_package"
+From fortune_companies;
