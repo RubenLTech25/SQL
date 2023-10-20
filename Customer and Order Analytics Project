@@ -1,43 +1,33 @@
-Select * From BIT_DB.customers Limit 20
+#In this SQL, I am querying a database with multiple tables to analyze customer and order data 
 
+#These queries were generated to test the integrity and prepare for cleaning
 Select * From BIT_DB.JanSales Limit 20
 
 Select * From BIT_DB.customers
 Where length(order_id) = 6
 And order_id <> 'Order ID';
 
-Select * From BIT_DB.JanSales Limit 20
-
-#How many orders were placed in January
+#1. How many orders were placed in January
 Select COUNT(orderid)
 From BIT_DB.JanSales
 Where length(orderid) = 6
 And orderid <> 'Order ID';
 
-SELECT COUNT(orderid)
-FROM BIT_DB.JanSales
-WHERE length(orderid) = 6
-AND orderid <> 'Order ID';
-
-#How many orders were for iPhones?
+#2. How many orders were for iPhones?
 Select Count(product)
 From BIT_DB.JanSales
 Where product='iPhone'
 And length(orderid)=6
 And orderid <> 'Order ID';
 
-#How many orders for iPhones, method 2
+#How many orders for iPhones, alternate query 
 Select Count(orderid)
 From BIT_DB.JanSales
 Where product='iPhone'
 And length(orderid)=6
 And orderid <> 'Order ID';
 
-Select * From BIT_DB.FebSales Limit 20
-
-Select * From BIT_DB.customers Limit 20
-
-#Selecting customer account numbers and order IDs for all orders placed in February
+#3. Selecting customer account numbers and order IDs for all orders placed in February
 Select customers.acctnum, FebSales.orderID
 From BIT_DB.customers
 Inner Join BIT_DB.FebSales
@@ -45,28 +35,26 @@ On customers.order_id = Febsales.orderID
 WHERE length(orderid) = 6
 AND orderid <> 'Order ID';
 
-#Selecting customer accounts for all orders placed in February
+#4. Selecting customer accounts for all orders placed in February
 SELECT distinct acctnum
 FROM BIT_DB.customers cust
-
 INNER JOIN BIT_DB.FebSales Feb
 ON cust.order_id=FEB.orderid
 WHERE length(orderid) = 6
 AND orderid <> 'Order ID';
 
-#Which is the lease expensive product sold in January?
-
+#5. Which is the lease expensive product sold in January?
 Select distinct Product, Price
 From BIT_DB.JanSales
 Where price in (Select min(price) FROM BIT_DB.JanSales)
 Group by product;
 
+#Alternate query method
 SELECT distinct Product, price
 FROM BIT_DB.JanSales
 WHERE price in (SELECT min(price) FROM BIT_DB.JanSales);
 
-#What is the total revenue for each product sold in January?
-
+#6. What is the total revenue for each product sold in January?
 Select distinct Product, sum(quantity)*price as revenue
 From BIT_DB.JanSales
 Group by product;
@@ -77,8 +65,7 @@ SELECT sum(quantity)*price as revenue
 FROM BIT_DB.JanSales
 GROUP BY product;
 
-#Which products were sold to a particular customer/address, how many and what is the total revenue?
-
+#7. Which products were sold to a particular customer/address, how many and what is the total revenue?
 Select product, Sum(quantity), sum(quantity)*price as revenue, location
 From BIT_DB.FebSales
 Where location = '548 Lincoln St, Seattle, WA 98101'
@@ -93,8 +80,7 @@ FROM BIT_DB.FebSales
 WHERE location = '548 Lincoln St, Seattle, WA 98101'
 GROUP BY product;
 
-#How many customers ordered more than 2 products in February and what was the average amount spent?
-
+#8. How many customers ordered more than 2 products in February and what was the average amount spent?
 Select
 count(distinct customers.acctnum), 
 avg(quantity*price)
@@ -106,7 +92,6 @@ And length(orderid) = 6
 AND orderid <> 'Order ID';
 
 #Alternate query
-
 Select 
 count(distinct cust.acctnum),
 avg(quantity*price)
