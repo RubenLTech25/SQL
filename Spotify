@@ -1,0 +1,74 @@
+#In this file, I am reviewing data from Spotify
+
+#Testing importation of data
+
+Select *
+From BIT_DB.Spotifydata;
+
+#average duration of songs in minutes
+
+Select avg(duration_ms)
+From BIT_DB.Spotifydata;
+
+#How many artists are in the list
+
+Select count(distinct artist_name)
+From BIT_DB.Spotifydata;
+
+#max value of track in list
+
+Select Max(duration_ms)
+From BIT_DB.Spotifydata;
+
+#min value of track in list
+
+Select Min(duration_ms)
+From BIT_DB.Spotifydata;
+
+#Top 10 tracks by artist
+
+Select track_name, artist_name, popularity
+From BIT_DB.Spotifydata
+Order by popularity desc
+Limit 10;
+
+#loudest songs in list
+
+Select track_name, artist_name, loudness
+From BIT_DB.Spotifydata
+Order by loudness asc
+Limit 20;
+
+#tracks with high energy
+
+Select track_name, energy
+From BIT_DB.Spotifydata
+Where energy > 0.35
+
+#average popularity
+Select avg(popularity)
+From BIT_DB.Spotifydata;
+
+#average danceability
+Select avg(danceability)
+From BIT_DB.Spotifydata;
+
+#average energy
+Select avg(energy)
+From BIT_DB.Spotifydata;
+
+#popular songs with above average danceability and energy
+
+Select artist_name, track_name, popularity, danceability, energy
+From BIT_DB.Spotifydata
+Where popularity > 86
+And danceability > 0.68
+And energy > 0.64;
+
+#popular songs by artist with above average danceability and energy
+
+Select distinct artist_name, track_name, popularity, danceability, energy
+From BIT_DB.Spotifydata
+Where popularity > 86
+And danceability > 0.68
+And energy > 0.64;
