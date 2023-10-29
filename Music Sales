@@ -111,7 +111,7 @@ on g.GenreId = t.GenreId;
 
 
 #Selecting all the rock albums
-SELECT a.Title AS Album
+SELECT distinct a.Title AS Album
 FROM chinook.tracks t
 JOIN chinook.Albums a ON a.AlbumId = t.AlbumId
 JOIN chinook.Media_Types m ON m.MediaTypeId = t.MediaTypeId
